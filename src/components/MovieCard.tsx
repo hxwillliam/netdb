@@ -1,6 +1,8 @@
+import MovieType from "../types/MovieType";
+import { useState } from "react";
+
 type MovieCardProps = {
-    MovieId: number;
-    MovieTitle: string;
+    movie: MovieType;
 }
 
 const cardStyle = {
@@ -9,12 +11,18 @@ const cardStyle = {
     color: 'black'
 }
 
-export const MovieCard = (props:MovieCardProps) => {
- 
+export const MovieCard = ({movie}:MovieCardProps) => {
+    const handleClick = (message: string) => { console.log(message); }
+    const [count, setCount] = useState(0);
+    const handleClickCount = () =>  setCount(count + 1);
+
+
     return (
-        <div style={cardStyle}>
-            <p>{props.MovieId}</p>
-            <h2>{props.MovieTitle}</h2>
+        <div style={cardStyle} onClick={handleClickCount}>
+            <p>{movie.id}</p>
+            <h2 onClick={()=> handleClick(movie.title)}>{movie.title}</h2>
+            <p onClick={()=> handleClick(movie.desc)}>{movie.desc}</p>
+            <p>click count: {count}</p>
         </div>
     );
 }
