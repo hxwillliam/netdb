@@ -1,7 +1,7 @@
 import MovieType from '../types/MovieType';
 import { API_URL } from './keys';
 
-interface Response {
+type Response = {
     results: {
         id: number;
         title: string;
