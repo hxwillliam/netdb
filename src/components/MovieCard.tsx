@@ -21,7 +21,6 @@ export const MovieCard = ({movie}:MovieCardProps) => {
 
     return (
         <div style={cardStyle} onClick={handleClickCount}>
-            <p>{movie.id}</p>
             <h2 onClick={()=> handleClick(movie.title)}>{movie.title}</h2>
             <p onClick={()=> handleClick(movie.desc)}>{movie.desc}</p>
             <p>click count: {count}</p>
