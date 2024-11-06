@@ -1,7 +1,6 @@
 import MovieType from '../types/MovieType';
+import {Response} from '../types/ResponseType';
 import { API_URL } from './keys';
-import { Response } from '../types/ResponseType';
-
 
 export const getMovies = async (): Promise<MovieType[]> => {
     try {

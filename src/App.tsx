@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import { MovieCard } from './components/MovieCard';
 import { getMovies } from './api/movies';
@@ -6,13 +6,20 @@ import MovieType from './types/MovieType';
 
 function App() {
   const [movies, setMovies] = useState<MovieType[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  const fetchMovies = async () => {
-    const movieData = await getMovies();
-    setMovies(movieData);
-  };
+  useEffect(() => {
+    const fetchMovies = async () => {
+      const movieData = await getMovies();
+      setMovies(movieData);
+      setLoading(false);
+    };
+    fetchMovies();
+  }, []);
 
-  fetchMovies();
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
