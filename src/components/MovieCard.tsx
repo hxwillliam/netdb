@@ -7,6 +7,8 @@ type MovieCardProps = {
 
 const cardStyle = {
     backgroundColor: 'lightblue',
+    padding: '10px',
+    marginBottom: '10px',
     borderRadius: '10px',
     color: 'black'
 }
