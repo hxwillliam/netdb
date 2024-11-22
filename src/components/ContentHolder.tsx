@@ -1,17 +1,17 @@
 
-import { Box, Button, Card, Image, Text } from "@chakra-ui/react"
+import { Box, Card, Image, Text } from "@chakra-ui/react"
 import { ContentHolderProps, MediaType } from "../types/ContentType"
 
 const getBackgroundColor = (mediaType: MediaType): string => {
     switch (mediaType) {
         case 'tv':
-            return 'blue.100';
+            return 'green.200';
         case 'movie':
-            return 'green.100';
+            return 'blue.200';
         case 'person':
-            return 'purple.100';
+            return 'purple.200';
         default:
-            return 'gray.100';
+            return 'black.100';
     }
 }
 
@@ -23,7 +23,7 @@ export const ContentHolder = ({ content, pTitle }: ContentHolderProps) => {
             bg={getBackgroundColor(content.media_type)}
         >
             {pTitle && (
-                <Box p={2} bg="gray.200">
+                <Box p={2} bg="black">
                     <Text fontSize="lg" fontWeight="bold">{pTitle}</Text>
                 </Box>
             )}
@@ -34,12 +34,11 @@ export const ContentHolder = ({ content, pTitle }: ContentHolderProps) => {
                 height="auto"
             />
             <Card.Body gap="2">
-                <Card.Title>{content.title}</Card.Title>
+                <Card.Title
+                color='black'
+                >{content.title}</Card.Title>
                 <Card.Description>{content.desc}</Card.Description>
             </Card.Body>
-            <Card.Footer gap="2">
-                <Button variant="solid">Open</Button>
-            </Card.Footer>
         </Card.Root>
     )
 }

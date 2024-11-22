@@ -12,4 +12,5 @@ export interface ContentType {
 export interface ContentHolderProps {
     content: ContentType;
     pTitle?: string;
+    color?: string;
 }
