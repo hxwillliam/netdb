@@ -1,5 +1,6 @@
 
 export type MediaType = 'tv' | 'movie' | 'person';
+export type ContentTypeOption = MediaType;
 
 export interface ContentType {
     id: number;
@@ -12,5 +13,4 @@ export interface ContentType {
 export interface ContentHolderProps {
     content: ContentType;
     pTitle?: string;
-    color?: string;
 }
