@@ -1,8 +1,7 @@
 import { ContentType } from '../types/ContentType';
 import { Response } from '../types/ResponseType';
-import { API_KEY } from './keys';
+import { API_KEY, IMG_BASE_URL } from './keys';
 
-const IMG_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
 export const getTVShows = async (page: number = 1): Promise<ContentType[]> => {
     try {

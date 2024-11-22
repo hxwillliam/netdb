@@ -1,6 +1,6 @@
 import { ContentType } from '../types/ContentType';
 import { Response } from '../types/ResponseType';
-import { API_KEY, imagePlaceholder } from './keys';
+import { API_KEY, IMG_BASE_URL, imagePlaceholder } from './keys';
 
 export const getPeople = async (page: number = 1): Promise<ContentType[]> => {
     try {
@@ -9,8 +9,8 @@ export const getPeople = async (page: number = 1): Promise<ContentType[]> => {
         return data.results.map((person) => ({
             id: person.id,
             title: person.name || 'Unknown',
-            desc:  'No department available',
-            image: `${imagePlaceholder}`,
+            desc: '',
+            image: person.profile_path ? `${IMG_BASE_URL}${person.profile_path}` : imagePlaceholder,
             media_type: 'person'
         }));
     } catch (error) {

@@ -8,6 +8,7 @@ export type Response = {
         name?: string;
         overview: string;
         poster_path: string;
+        profile_path?: string;
         media_type: MediaType;
     }[];
     page: number;
