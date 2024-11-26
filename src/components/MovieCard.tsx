@@ -1,5 +1,5 @@
 import MovieType from "../types/MovieType";
-import { Button, Card, Image } from "@chakra-ui/react"
+import { Card, Image } from "@chakra-ui/react"
 
 type MovieCardProps = {
     movie: MovieType;
@@ -21,9 +21,6 @@ export const MovieCard = ({movie}:MovieCardProps) => {
                     {movie.desc}
                 </Card.Description>
             </Card.Body>
-            <Card.Footer gap="2">
-                <Button variant="solid">Open</Button>
-            </Card.Footer>
         </Card.Root>
     );
 }

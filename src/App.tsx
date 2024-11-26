@@ -14,7 +14,7 @@ function App() {
 
   if (loading) return <div>Loading...</div>;
 
-  return (
+  return (  
     <Box p={4}>
       <Flex justify="center" mb={4}>
         <ContentTypeSelector 
