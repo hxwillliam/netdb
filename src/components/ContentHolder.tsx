@@ -1,4 +1,3 @@
-
 import { Box, Card, Image, Text, Flex } from "@chakra-ui/react"
 import { ContentHolderProps, MediaType } from "../types/ContentType"
 import { keyframes } from "@emotion/react"
@@ -11,6 +10,7 @@ import {
   DialogBody,
   DialogCloseTrigger,
 } from "@/components/ui/dialog"
+import { useNavigate } from "react-router-dom"
 
 const slideIn = keyframes`
   from {
@@ -37,6 +37,14 @@ const getBackgroundColor = (mediaType: MediaType): string => {
 }
 
 export const ContentHolder = ({ content, pTitle }: ContentHolderProps) => {
+    const navigate = useNavigate();
+
+    if (!content) return null;
+
+    const handleNavigate = () => {
+        navigate(`/${content.media_type}/${content.id}`);
+    };
+
     return (
         <DialogRoot size="xl" placement="center" motionPreset="slide-in-bottom">
             <DialogTrigger asChild>
@@ -53,10 +61,15 @@ export const ContentHolder = ({ content, pTitle }: ContentHolderProps) => {
                             transform: 'scale(1.02)'
                         }
                     }}
+                    onClick={handleNavigate}
+                    role="button"
+                    aria-label={`View details for ${content.title}`}
                 >
                     {pTitle && (
                         <Box p={2} bg="black">
-                            <Text fontSize="lg" fontWeight="bold">{pTitle}</Text>
+                            <Text fontSize="lg" fontWeight="bold" color="white">
+                                {pTitle}
+                            </Text>
                         </Box>
                     )}
                     <Image
@@ -64,10 +77,19 @@ export const ContentHolder = ({ content, pTitle }: ContentHolderProps) => {
                         alt={content.title}
                         width="100%"
                         height="auto"
+                        loading="lazy"
                     />
                     <Card.Body gap="2">
                         <Card.Title color='black'>{content.title}</Card.Title>
-                        <Card.Description>{content.desc}</Card.Description>
+                        <Card.Description style={{ 
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            display: '-webkit-box',
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: 'vertical'
+                        }}>
+                            {content.desc}
+                        </Card.Description>
                     </Card.Body>
                 </Card.Root>
             </DialogTrigger>
@@ -75,21 +97,32 @@ export const ContentHolder = ({ content, pTitle }: ContentHolderProps) => {
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle>{content.title}</DialogTitle>
-                    <DialogCloseTrigger />
+                    <DialogCloseTrigger aria-label="Close dialog" />
                 </DialogHeader>
                 <DialogBody>
-                    <Flex gap={4}>
+                    <Flex gap={4} direction={{ base: 'column', md: 'row' }}>
                         <Image
                             src={content.image}
                             alt={content.title}
-                            maxW="300px"
+                            maxW={{ base: '100%', md: '300px' }}
                             borderRadius="md"
+                            objectFit="cover"
                         />
-                        <Box>
-                            <Text fontSize="lg" fontWeight="bold" mb={2}>
+                        <Box flex="1">
+                            <Text 
+                                fontSize="lg" 
+                                fontWeight="bold" 
+                                mb={2}
+                                color={getBackgroundColor(content.media_type)}
+                            >
                                 {content.media_type.toUpperCase()}
                             </Text>
                             <Text>{content.desc}</Text>
+                            {content.id && (
+                                <Text mt={4} fontSize="sm" color="gray.500">
+                                    ID: {content.id}
+                                </Text>
+                            )}
                         </Box>
                     </Flex>
                 </DialogBody>
