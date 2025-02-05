@@ -1,35 +1,33 @@
-import { useState, useEffect } from 'react';
-import { ContentType, ContentTypeOption } from '../types/ContentType';
+import { useQuery } from '@tanstack/react-query';
+import { ContentTypeOption } from '../types/ContentType';
 import { getMovies } from '../api/movies';
 import { getTVShows } from '../api/tv';
 import { getPeople } from '../api/person';
 
+const fetchContentByType = async (contentType: ContentTypeOption, page: number) => {
+  switch(contentType) {
+    case 'movie':
+      return await getMovies(page);
+    case 'tv':
+      return await getTVShows(page);
+    case 'person':
+      return await getPeople(page);
+    default:
+      return [];
+  }
+};
+
 export const useContent = (contentType: ContentTypeOption, page: number) => {
-  const [content, setContent] = useState<ContentType[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['content', contentType, page],
+    queryFn: () => fetchContentByType(contentType, page),
+    staleTime: 5 * 60 * 1000, 
+    gcTime: 30 * 60 * 1000,
+  });
 
-  useEffect(() => {
-    const fetchContent = async () => {
-      setLoading(true);
-      let data: ContentType[] = [];
-      
-      switch(contentType) {
-        case 'movie':
-          data = await getMovies(page);
-          break;
-        case 'tv':
-          data = await getTVShows(page);
-          break;
-        case 'person':
-          data = await getPeople(page);
-          break;
-      }
-      
-      setContent(data);
-      setLoading(false);
-    };
-    fetchContent();
-  }, [page, contentType]);
-
-  return { content, loading };
+  return { 
+    content: data || [], 
+    loading: isLoading,
+    error 
+  };
 };
