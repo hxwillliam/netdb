@@ -1,5 +1,6 @@
 import { ContentType } from '../types/ContentType';
 import { Response } from '../types/ResponseType';
+import { IMG_BASE_URL, imagePlaceholder, API_TOKEN } from './keys';
 
 export const searchContent = async (query: string): Promise<ContentType[]> => {
   if (!query) return [];
@@ -8,7 +9,7 @@ export const searchContent = async (query: string): Promise<ContentType[]> => {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: `Bearer ${import.meta.env.VITE_API_TOKEN}`
+      Authorization: `Bearer ${API_TOKEN}`
     }
   };
 
@@ -20,8 +21,8 @@ export const searchContent = async (query: string): Promise<ContentType[]> => {
     title: item.title || item.name || 'Untitled',
     desc: item.overview || '',
     image: item.poster_path || item.profile_path 
-      ? `${import.meta.env.VITE_IMG_BASE_URL}${item.poster_path || item.profile_path}`
-      : import.meta.env.VITE_IMAGE_PLACEHOLDER,
+      ? `${IMG_BASE_URL}${item.poster_path || item.profile_path}`
+      : imagePlaceholder,
     media_type: item.media_type
   }));
 };
